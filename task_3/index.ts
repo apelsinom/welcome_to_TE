@@ -44,4 +44,19 @@ const BALLONS: { [key: string]: BallonI } = {
 	},
 };
 
-// Ваш код здесь
+// Решение здесь
+(async () => {
+    try {
+        const publicIds = Object.values(BALLONS)
+            .filter(ballon => ballon.isPublic)
+            .map(ballon => ballon.id);
+
+        const amounts = await Promise.all(publicIds.map(id => fetchBallonAmount(id)));
+
+        const total = amounts.reduce((sum, amount) => sum + amount, 0);
+
+        console.log('Total public balloons amount:', total);
+    } catch (error) {
+        console.error('Error fetching balloon amounts:', error);
+    }
+})();
