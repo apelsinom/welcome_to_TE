@@ -7,8 +7,12 @@ import styles from './page.module.css';
 
 import { fetchOnePost } from '@/libs/fetchOnePost';
 
+// ✅ общий ключ и общий fetcher
+const SWR_KEY = 'shared_post';
+const fetcher = () => fetchOnePost({ delayMS: 2000 });
+
 const ComponentOne = () => {
-    const { data } = useSWR('custom_key_1', fetchOnePost);
+    const { data } = useSWR(SWR_KEY, fetcher);
     //...some logic
 
     return data ? (
@@ -23,7 +27,7 @@ const ComponentOne = () => {
 };
 
 const ComponentTwo = () => {
-    const { data } = useSWR('custom_key_2', () => fetchOnePost({ delayMS: 2000 }));
+    const { data } = useSWR(SWR_KEY, fetcher);
     //...some logic
 
     return data ? (
